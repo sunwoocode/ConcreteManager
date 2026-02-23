@@ -1361,6 +1361,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::VillainSpawnData
   spawnPositions:
   - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
 --- !u!1 &1045468059
 GameObject:
   m_ObjectHideFlags: 0
@@ -1788,7 +1789,7 @@ GameObject:
   - component: {fileID: 1777392269}
   - component: {fileID: 1777392268}
   m_Layer: 0
-  m_Name: GameTime
+  m_Name: Timer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1807,7 +1808,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TimeSystem
   timerText: {fileID: 458602447}
-  startTime: 15
+  timer: 0
 --- !u!4 &1777392269
 Transform:
   m_ObjectHideFlags: 0
