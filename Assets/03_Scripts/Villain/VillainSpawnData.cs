@@ -14,9 +14,9 @@ public class VillainSpawnData : MonoBehaviour
         else
             Destroy(gameObject);
 
-        for (int x = -4; x < 5; x++)
+        for (float x = -4.5f; x < 4.5; x++)
         {
-            for (int y = -4; y < 5; y++)
+            for (float y = -4.5f; y < 4.5; y++)
             {
                 spawnPositions.Add(new Vector3(x, 0, y));
             }

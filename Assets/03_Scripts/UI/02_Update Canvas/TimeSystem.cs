@@ -24,7 +24,9 @@ public class TimeSystem : MonoBehaviour
         {
             timer = 0f;
             isRunning = false;
+            UpdateUI();
             OnTimeOver();
+            return;
         }
 
         UpdateUI();
@@ -53,9 +55,8 @@ public class TimeSystem : MonoBehaviour
 
     private void OnTimeOver()
     {
+        Debug.Log("빌런 등장!");
         VillainSpawnSystem.Instance.VillainSpawnStart();
         StartTimer(startTime);
-        Debug.Log("Time Over");
-        // 게임오버 처리 등
     }
 }

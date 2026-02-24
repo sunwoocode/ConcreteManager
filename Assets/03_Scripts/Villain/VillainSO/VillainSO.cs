@@ -1,5 +1,12 @@
 using UnityEngine;
 
+public enum AttackType
+{
+    Punch,
+    Kick,
+    Weapon,
+}
+
 [CreateAssetMenu(fileName = "VillainSO", menuName = "Scriptable Objects/VillainSO")]
 public class VillainSO : ScriptableObject
 {
@@ -19,8 +26,7 @@ public class VillainSO : ScriptableObject
     public int itg;                 // 지능
     public int sight;               // 시야 범위
 
-    public int attType;             // 공격 타입
-    public int tarType;             // 타깃 타입
+    public AttackType attackType;   // 무기
 
     public int destructionPower;    // 최종 파괴력
     public int aggroPriority;       // 어그로 우선순위

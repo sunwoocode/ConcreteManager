@@ -17,10 +17,11 @@ public class VillainSpawnSystem : MonoBehaviour
     public void VillainSpawnStart()
     {
         int index = Random.Range(0, VillainSpawnData.Instance.spawnPositions.Count);
-        Vector3 spawnPos = VillainSpawnData.Instance.spawnPositions[index-4];
 
-        Debug.Log(spawnPos.x + ", " + spawnPos.y + ", " + spawnPos.z);
+        Vector3 spawnPos = VillainSpawnData.Instance.spawnPositions[index];
 
+        Debug.Log("빌런 등장 위치: " + (spawnPos.x + 5.5) + ", " + (spawnPos.z + 5.5));
+        
         Instantiate(villainPrefab, spawnPos, Quaternion.identity);
     }
 }
