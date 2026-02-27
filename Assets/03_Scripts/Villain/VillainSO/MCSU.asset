@@ -13,8 +13,13 @@ MonoBehaviour:
   m_Name: MCSU
   m_EditorClassIdentifier: Assembly-CSharp::VillainSO
   id: ms
-  VillainName: MCSU
+  vName: MCSU
   icon: {fileID: 21300000, guid: e1aa66da4b2d7a548a1899078b137238, type: 3}
+  combatType: 0
+  goal: 3
+  weakness: 3
+  readyTime: 2
+  attackRange: 2
   hp: 100
   str: 10
   def: 5
@@ -22,3 +27,5 @@ MonoBehaviour:
   speed: 5
   itg: 1
   sight: 10
+  destructionPower: 0
+  aggroPriority: 0

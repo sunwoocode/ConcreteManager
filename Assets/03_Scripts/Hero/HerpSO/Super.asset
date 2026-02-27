@@ -12,3 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66eceedcc79f05445827cf9734a82bbc, type: 3}
   m_Name: Super
   m_EditorClassIdentifier: Assembly-CSharp::HeroSO
+  id: 
+  hName: 
+  icon: {fileID: 0}
+  hp: 0
+  str: 0
+  def: 0
+  mov: 0
+  speed: 0
+  itg: 0
+  destructionPower: 0
+  heroType: 0

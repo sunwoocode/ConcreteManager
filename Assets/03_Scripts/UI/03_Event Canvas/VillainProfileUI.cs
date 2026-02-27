@@ -4,12 +4,13 @@ using UnityEngine.UI;
 
 public class VillainProfileUI : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI content;
-    [SerializeField] private Image image;
+    [SerializeField] private TextMeshProUGUI vName;
+    [SerializeField] private TextMeshProUGUI vInfo;
+    [SerializeField] private Image vImage;
 
     public void ShowVillainProfileUI()
     {
-        if (content == null || image == null) return;
+        if (vName == null || vInfo == null || vImage == null) return;
 
         if (UIManager.Instance.isVillainIconClicked == false)
         {
@@ -22,12 +23,10 @@ public class VillainProfileUI : MonoBehaviour
             UIManager.Instance.isVillainIconClicked = false;
         }
 
-        content.text = VillainList.Instance.VillainDataList[0].VillainName
-                       + "\n\n\n\n\n\n\n\n\n"
-                       + VillainList.Instance.VillainDataList[0].attackType + "\n"
-                       + VillainList.Instance.VillainDataList[0].str + "\n"
-                       + VillainList.Instance.VillainDataList[0].itg + "\n"
-                       + VillainList.Instance.VillainDataList[0].sight + "\n";
-        image.sprite = VillainList.Instance.VillainDataList[0].icon;
+        vName.text = VillainList.Instance.VillainDataList[0].vName;
+        vImage.sprite = VillainList.Instance.VillainDataList[0].icon;
+        vInfo.text = VillainList.Instance.VillainDataList[0].combatType + "\n\n"
+                       + VillainList.Instance.VillainDataList[0].goal + "\n\n"
+                       + VillainList.Instance.VillainDataList[0].weakness + "\n\n";
     }
 }
