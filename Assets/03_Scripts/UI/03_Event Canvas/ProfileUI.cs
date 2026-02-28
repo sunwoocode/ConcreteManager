@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class VillainProfileUI : MonoBehaviour
+public class ProfileUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI vName;
     [SerializeField] private TextMeshProUGUI vInfo;
@@ -25,8 +25,8 @@ public class VillainProfileUI : MonoBehaviour
 
         vName.text = VillainList.Instance.VillainDataList[0].vName;
         vImage.sprite = VillainList.Instance.VillainDataList[0].icon;
-        vInfo.text = VillainList.Instance.VillainDataList[0].combatType + "\n\n"
-                       + VillainList.Instance.VillainDataList[0].goal + "\n\n"
+        vInfo.text = VillainList.Instance.VillainDataList[0].goal + "\n\n"
+                       + VillainList.Instance.VillainDataList[0].combat + "\n\n"
                        + VillainList.Instance.VillainDataList[0].weakness + "\n\n";
     }
 }

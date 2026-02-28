@@ -3,18 +3,20 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "VillainSO", menuName = "Scriptable Objects/VillainSO")]
 public class VillainSO : ScriptableObject
 {
-    #region 변수
     public string id;               // 식별자
 
     public string vName;            // 이름
     public Sprite icon;             // 이미지
 
-    public CombatType combatType;   // 전투 타입
     public Goal goal;               // 목표
-    public weakness weakness;       // 약점
+    public Combat combat;           // 전투
+    public Weakness weakness;       // 약점
 
     public float readyTime;         // 준비 시간
     public float attackRange;       // 공격 범위
+    /// <summary>
+    /// -----------------------------------------
+    /// </summary>
 
     public int hp;                  // 체력
     public int str;                 // 공격력
@@ -28,15 +30,6 @@ public class VillainSO : ScriptableObject
 
     public int destructionPower;    // 최종 파괴력
     public int aggroPriority;       // 어그로 우선순위
-    
-    #endregion
-}
-
-public enum CombatType  // 공격 타입
-{
-    Punch,
-    Kick,
-    Weapon,
 }
 
 public enum Goal        // 목표
@@ -48,10 +41,17 @@ public enum Goal        // 목표
     Money,
 }
 
-public enum weakness    // 약점
+public enum Combat  // 공격 타입
 {
+    Punch,
+    Kick,
+    Weapon,
+}
+
+public enum Weakness    // 약점
+{
+    Bear,
     Police,
     Money,
     Love,
-    Bear,
 }

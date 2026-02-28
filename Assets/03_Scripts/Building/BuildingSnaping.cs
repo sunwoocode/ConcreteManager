@@ -1,11 +1,23 @@
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class BuildingSnaping : MonoBehaviour
 {
+    public static BuildingSnaping instace {  get; private set; }
+
     private Vector3 position;
     private float width;
     private float length;
+
+    private void Awake()
+    {
+        if (instace == null)
+            instace = this;
+        else
+            Destroy(this);
+    }
 
     void Start()
     {
@@ -17,6 +29,7 @@ public class BuildingSnaping : MonoBehaviour
     {
         position = this.transform.position;
         this.transform.position = GetSnappedPosition(position, width, length);
+        BuildingPosition();
     }
 
     public static Vector3 GetSnappedPosition(Vector3 worldPos, float width, float length)
@@ -29,4 +42,29 @@ public class BuildingSnaping : MonoBehaviour
 
         return new Vector3(snapX, worldPos.y, snapZ);
     }
+
+    public List<Vector3> BuildingPosition()
+    {
+        List<Vector3> bp = new List<Vector3>();
+
+        float halfWidth = width / 2;
+        float halfLength = length / 2;
+
+        bp.Add(position);
+        bp.Add(new Vector3(position.x + halfWidth, position.y, position.z + halfWidth));
+        bp.Add(new Vector3(position.x + halfWidth, position.y, position.z - halfWidth));
+        bp.Add(new Vector3(position.x - halfWidth, position.y, position.z - halfWidth));
+        bp.Add(new Vector3(position.x - halfWidth, position.y, position.z + halfWidth));
+
+        return bp;
+    }
+}
+
+public enum BuildingPosition
+{
+    Center,
+    EastUp,
+    EastDown,
+    WestUp,
+    WestDown,
 }

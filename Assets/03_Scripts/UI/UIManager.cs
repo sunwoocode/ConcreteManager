@@ -4,6 +4,9 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
+    [SerializeField] private ProfileUI profileUI;
+    [SerializeField] private GameObject postUI;
+
     private void Awake()
     {
         if (Instance == null)
@@ -12,13 +15,31 @@ public class UIManager : MonoBehaviour
             Destroy(gameObject);
     }
 
-    [SerializeField] private VillainProfileUI villainProfileUI;
-
     public bool isVillainIconClicked;
 
     public void ShowVillainUI()
     {
-        villainProfileUI.ShowVillainProfileUI();
+        profileUI.ShowVillainProfileUI();
         return;
+    }
+
+    public void ShowPostUI()
+    {
+        postUI.SetActive(true);
+    }
+
+    public void ShowUnitUI()
+    {
+
+    }
+
+    public void ShowBuildingUI()
+    {
+
+    }
+
+    public void ShowCharacterUI()
+    {
+
     }
 }

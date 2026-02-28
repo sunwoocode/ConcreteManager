@@ -8,11 +8,12 @@ public class InputManager : MonoBehaviour
         if (Keyboard.current.digit1Key.wasPressedThisFrame) OnKey1();
         if (Keyboard.current.digit2Key.wasPressedThisFrame) OnKey2();
         if (Keyboard.current.digit3Key.wasPressedThisFrame) OnKey3();
+        if (Keyboard.current.digit4Key.wasPressedThisFrame) OnKey4();
     }
 
     private void OnKey1()
     {
-        UIManager.Instance.ShowVillainUI();
+        UIManager.Instance.ShowPostUI();
     }
 
     private void OnKey2()
@@ -23,5 +24,10 @@ public class InputManager : MonoBehaviour
     private void OnKey3()
     {
         Debug.Log("3 ют╥б");
+    }
+
+    private void OnKey4()
+    {
+        UIManager.Instance.ShowVillainUI();
     }
 }

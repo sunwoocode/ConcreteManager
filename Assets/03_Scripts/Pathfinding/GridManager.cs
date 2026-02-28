@@ -20,24 +20,29 @@ public class GridManager : MonoBehaviour
         else
             Destroy(this);
 
-        CreateGrid();
-        ExportToCSV();
-        NDInselt();
+        CreateGrid();       // 그리드 생성
+        ExportToCSV();      // 그리드 csv 백업
+    }
+
+    void Start()    // 다른 메니저에서 건물 등의 정보 불러올 때 사용
+    {
+
+    }
+
+    void Update()
+    {
+        NDResearch();       // 노드 walkable 값 탐색
+        NDInselt();         // 노드 수정
+    }
+
+    public void NDResearch()
+    {
+
     }
 
     void NDInselt()
     {
         grid[0, 1].walkable = false;
-    }
-
-    void Start()    // 다른 메니저에서 건물 등의 정보 불러올 때 사용
-    {
-        
-    }
-
-    void Update()
-    {
-        
     }
 
     public void CreateGrid()
@@ -64,3 +69,5 @@ public class GridManager : MonoBehaviour
         File.WriteAllText(Application.dataPath + "/03_Scripts/Pathfinding/NodeData.csv", sb.ToString());
     }
 }
+
+// sb.AppendLine("x,y,weight,walkable,Center,EastUp,EastDown,WestUp,WestDown");
