@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class BuildingSnaping : MonoBehaviour
 {
@@ -33,7 +31,7 @@ public class BuildingSnaping : MonoBehaviour
         return new Vector3(snapX, worldPos.y, snapZ);
     }
 
-    public List<Vector3> BuildingPosition()
+    public void BuildingPosition()      // ∫Ùµ˘ µ•¿Ã≈Õ
     {
         List<Vector3> bp = new List<Vector3>();
 
@@ -46,15 +44,6 @@ public class BuildingSnaping : MonoBehaviour
         bp.Add(new Vector3(position.x - halfWidth, position.y, position.z - halfWidth));
         bp.Add(new Vector3(position.x - halfWidth, position.y, position.z + halfWidth));
 
-        return bp;
+        GridManager.instance.bpData = bp;
     }
-}
-
-public enum BP
-{
-    Center,
-    EastUp,
-    EastDown,
-    WestUp,
-    WestDown,
 }

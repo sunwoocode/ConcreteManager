@@ -1,4 +1,4 @@
-x,y,weight,walkable,Center,EastUp,EastDown,WestUp,WestDown
+x,y,weight,walkable
 0,0,10,True
 0,1,10,True
 0,2,10,True

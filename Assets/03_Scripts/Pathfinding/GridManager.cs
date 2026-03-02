@@ -12,6 +12,7 @@ public class GridManager : MonoBehaviour
     private float cellSize = 1;         // 그리드 사이즈
 
     private Node[,] grid;               // 전체 격자 노드 배열
+    public List<Vector3> bpData;        // 건물 데이터 리스트
 
     void Awake()
     {
@@ -20,8 +21,9 @@ public class GridManager : MonoBehaviour
         else
             Destroy(this);
 
-        CreateGrid();       // 그리드 생성
-        ExportToCSV();      // 그리드 csv 백업
+        CreateGrid();           // 그리드 생성
+        NordExportToCSV();      // 그리드 csv 백업
+        BuildExportToCSV();     // 건물 데이터 csv 백업
     }
 
     void Start()    // 다른 메니저에서 건물 등의 정보 불러올 때 사용
@@ -54,10 +56,10 @@ public class GridManager : MonoBehaviour
                 grid[x, y] = new Node(new Vector2Int(x, y), true);
     }
 
-    public void ExportToCSV()
+    public void NordExportToCSV()       // 노드 데이터
     {
         StringBuilder sb = new StringBuilder();
-        sb.AppendLine("x,y,weight,walkable,Center,EastUp,EastDown,WestUp,WestDown");
+        sb.AppendLine("x,y,weight,walkable");
 
         for (int x = 0; x < width; x++)
             for (int y = 0; y < height; y++)
@@ -67,5 +69,13 @@ public class GridManager : MonoBehaviour
             }
 
         File.WriteAllText(Application.dataPath + "/03_Scripts/Pathfinding/NodeData.csv", sb.ToString());
+    }
+
+    public void BuildExportToCSV()       // 건물 데이터
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.AppendLine("Index,Center,EastUp,EastDown,WestUp,WestDown");
+
+        File.WriteAllText(Application.dataPath + "/03_Scripts/Pathfinding/BuildData.csv", sb.ToString());
     }
 }
