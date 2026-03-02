@@ -5,19 +5,9 @@ using UnityEngine.UIElements;
 
 public class BuildingSnaping : MonoBehaviour
 {
-    public static BuildingSnaping instace {  get; private set; }
-
     private Vector3 position;
     private float width;
     private float length;
-
-    private void Awake()
-    {
-        if (instace == null)
-            instace = this;
-        else
-            Destroy(this);
-    }
 
     void Start()
     {
@@ -60,7 +50,7 @@ public class BuildingSnaping : MonoBehaviour
     }
 }
 
-public enum BuildingPosition
+public enum BP
 {
     Center,
     EastUp,

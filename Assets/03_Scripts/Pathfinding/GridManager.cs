@@ -57,7 +57,7 @@ public class GridManager : MonoBehaviour
     public void ExportToCSV()
     {
         StringBuilder sb = new StringBuilder();
-        sb.AppendLine("x,y,weight,walkable");
+        sb.AppendLine("x,y,weight,walkable,Center,EastUp,EastDown,WestUp,WestDown");
 
         for (int x = 0; x < width; x++)
             for (int y = 0; y < height; y++)
@@ -69,5 +69,3 @@ public class GridManager : MonoBehaviour
         File.WriteAllText(Application.dataPath + "/03_Scripts/Pathfinding/NodeData.csv", sb.ToString());
     }
 }
-
-// sb.AppendLine("x,y,weight,walkable,Center,EastUp,EastDown,WestUp,WestDown");
