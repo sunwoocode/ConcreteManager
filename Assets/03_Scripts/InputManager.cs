@@ -11,23 +11,25 @@ public class InputManager : MonoBehaviour
         if (Keyboard.current.digit4Key.wasPressedThisFrame) OnKey4();
     }
 
-    private void OnKey1()
+    private void OnKey1()       // Post Tab
     {
+        Debug.Log("1 입력 -> Post Tab 이동");
         UIManager.Instance.ShowPostUI();
     }
 
-    private void OnKey2()
+    private void OnKey2()       // Unit Tab
     {
-        Debug.Log("2 입력");
+        Debug.Log("2 입력 -> Unit Tab 이동");
     }
 
-    private void OnKey3()
+    private void OnKey3()       // Build Tab
     {
-        Debug.Log("3 입력");
+        Debug.Log("3 입력 -> Build Tab 이동");
     }
 
-    private void OnKey4()
+    private void OnKey4()       // Character Tab
     {
+        Debug.Log("4 입력 -> Character Tab 이동");
         UIManager.Instance.ShowVillainUI();
     }
 }

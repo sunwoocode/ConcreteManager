@@ -6,11 +6,13 @@ public class BuildingSnaping : MonoBehaviour
     private Vector3 position;
     private float width;
     private float length;
+    private float high;
 
     void Start()
     {
         width = this.transform.localScale.x;
         length = this.transform.localScale.z;
+        high = this.transform.localScale.y;
     }
 
     void Update()
@@ -37,13 +39,14 @@ public class BuildingSnaping : MonoBehaviour
 
         float halfWidth = width / 2;
         float halfLength = length / 2;
-
+        
         bp.Add(position);
-        bp.Add(new Vector3(position.x + halfWidth, position.y, position.z + halfWidth));
-        bp.Add(new Vector3(position.x + halfWidth, position.y, position.z - halfWidth));
-        bp.Add(new Vector3(position.x - halfWidth, position.y, position.z - halfWidth));
-        bp.Add(new Vector3(position.x - halfWidth, position.y, position.z + halfWidth));
+        bp.Add(new Vector3(position.x + halfWidth, position.y, position.z + halfLength));
+        bp.Add(new Vector3(position.x + halfWidth, position.y, position.z - halfLength));
+        bp.Add(new Vector3(position.x - halfWidth, position.y, position.z - halfLength));
+        bp.Add(new Vector3(position.x - halfWidth, position.y, position.z + halfLength));
 
-        GridManager.instance.bpData = bp;
+        BuildData data = new BuildData(high, bp);
+        GridManager.instance.bpData.Add(data);
     }
 }

@@ -14,12 +14,3 @@ public class BuildingInfo : MonoBehaviour
         // Debug.Log("건물 데이터: " + GridManager.instance.bpData[0]);
     }
 }
-
-public enum BP
-{
-    Center,
-    EastUp,
-    EastDown,
-    WestUp,
-    WestDown,
-}

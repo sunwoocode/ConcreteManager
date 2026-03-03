@@ -1,7 +1,10 @@
 using System.Collections.Generic;
-using UnityEngine;
+using System.Collections.Specialized;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
+using UnityEngine;
+using static TreeEditor.TreeEditorHelper;
 
 public class GridManager : MonoBehaviour
 {
@@ -12,7 +15,7 @@ public class GridManager : MonoBehaviour
     private float cellSize = 1;         // 그리드 사이즈
 
     private Node[,] grid;               // 전체 격자 노드 배열
-    public List<Vector3> bpData;        // 건물 데이터 리스트
+    public List<BuildData> bpData;        // 건물 데이터 리스트
 
     void Awake()
     {
@@ -20,6 +23,8 @@ public class GridManager : MonoBehaviour
             instance = this;
         else
             Destroy(this);
+
+        bpData = new List<BuildData>();
 
         CreateGrid();           // 그리드 생성
         NordExportToCSV();      // 그리드 csv 백업
@@ -44,38 +49,85 @@ public class GridManager : MonoBehaviour
 
     void NDInselt()
     {
-        grid[0, 1].walkable = false;
+        // grid[0, 1].walkable = true;
     }
 
     public void CreateGrid()
     {
-        grid = new Node[width, height];
+        grid = new Node[10, 10];
 
-        for (int x = 0; x < width; x++)
-            for (int y = 0; y < height; y++)
+        for (int x = 0; x < 10; x++)
+            for (int y = 0; y < 10; y++)
                 grid[x, y] = new Node(new Vector2Int(x, y), true);
     }
 
     public void NordExportToCSV()       // 노드 데이터
     {
         StringBuilder sb = new StringBuilder();
-        sb.AppendLine("x,y,weight,walkable");
+        sb.AppendLine("x,y,direction,walkable");
 
-        for (int x = 0; x < width; x++)
-            for (int y = 0; y < height; y++)
-            {
-                Node node = grid[x, y];
-                sb.AppendLine($"{x},{y},{node.movementWeight},{node.walkable}");
-            }
+        for (int i = 0; i < 2; i++)
+        {
+            for (int y = 0; y < 10; y++)
+                for (int x = 0; x < 10; x++)
+                {
+                    Node node = grid[x, y];
 
+                    if (i == 0)
+                    {
+                        node.nodeType = false;       // 가로
+                        node.nodePos = new Vector3((float)x + 0.5f, 0, (float)y + 1f);
+
+                        if (y != 9)
+                        {
+                            // wNode nodePos 계산 식
+                            sb.AppendLine($"{node.nodePos.x},{node.nodePos.z},{node.nodeType},{node.walkable}");
+
+                            FindWalkableNode(node);
+                        }
+                    }
+                }
+
+            for (int x = 0; x < 10; x++)
+                for (int y = 0; y < 10; y++)
+                {
+                    Node node = grid[x, y];
+
+                    if (i == 1)
+                    {
+                        node.nodeType = true;        // 세로
+                        node.nodePos = new Vector3((float)x + 1f, 0, (float)y + 0.5f);
+
+                        if (x != 9)
+                        {
+                            // hNode nodePos 계산 식
+                            sb.AppendLine($"{node.nodePos.x},{node.nodePos.z},{node.nodeType},{node.walkable}");
+
+                            FindWalkableNode(node);
+                        }
+                            
+                    }
+                }
+        }
+            
         File.WriteAllText(Application.dataPath + "/03_Scripts/Pathfinding/NodeData.csv", sb.ToString());
     }
 
     public void BuildExportToCSV()       // 건물 데이터
     {
         StringBuilder sb = new StringBuilder();
-        sb.AppendLine("Index,Center,EastUp,EastDown,WestUp,WestDown");
+        sb.AppendLine("high,Center,EastUp,EastDown,WestUp,WestDown");
+
+        // bpData 출력 반복문
+
 
         File.WriteAllText(Application.dataPath + "/03_Scripts/Pathfinding/BuildData.csv", sb.ToString());
+    }
+
+
+    public void FindWalkableNode(Node node)      // 이동 가능 노드 탐색
+    {
+        // node.nodePos이 bpData 범위 내 포함되는지 확인하고,
+        // 포함되어 있다면 해당 node.walkable = flase 한다.
     }
 }

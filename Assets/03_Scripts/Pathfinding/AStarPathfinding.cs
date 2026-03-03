@@ -1,8 +1,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public class AStarPathfinding : MonoBehaviour
+{
+    private GridManager gridManager;
+
+    private List<Node> openList;        // 탐색 예정 노드 목록
+    private HashSet<Node> closedList;   // 탐색 완료 노드 목록
+
+    void Awake()
+    {
+        gridManager = GridManager.instance;
+    }
+
+    public List<Node> FindPath(Vector3 startPos, Vector3 targetPos) { return null; }
+    private List<Node> GetNeighbours(Node node) { return null; }
+    private List<Node> RetracePath(Node startNode, Node endNode) { return null; }
+    private int GetDistance(Node nodeA, Node nodeB) { return 0; }
+}
+
 public class Node
 {
+    public bool nodeType;              // 노드 종류
+    public Vector3 nodePos;            // 노드 위치
+
     public Vector2Int position;     // 그리드 상의 정수 좌표 (x, y)
     public bool walkable;           // 장애물 여부 (false일 경우 이동 불가능한 구역)
     public int movementWeight = 1;  // 이동 비용 가중치 (예: 도로는 1, 험지는 5)
@@ -27,20 +48,15 @@ public class Node
     }
 }
 
-public class AStarPathfinding : MonoBehaviour
+[System.Serializable]
+public class BuildData
 {
-    private GridManager gridManager;
+    public float height;            // 건물의 높이
+    public List<Vector3> corners;   // 중심점 포함 5개 좌표 (Center, EUp, EDown, WDown, WUp)
 
-    private List<Node> openList;        // 탐색 예정 노드 목록
-    private HashSet<Node> closedList;   // 탐색 완료 노드 목록
-
-    void Awake()
+    public BuildData(float h, List<Vector3> c)
     {
-        gridManager = GridManager.instance;
+        this.height = h;
+        this.corners = c;
     }
-
-    public List<Node> FindPath(Vector3 startPos, Vector3 targetPos) { return null; }
-    private List<Node> GetNeighbours(Node node) { return null; }
-    private List<Node> RetracePath(Node startNode, Node endNode) { return null; }
-    private int GetDistance(Node nodeA, Node nodeB) { return 0; }
 }
