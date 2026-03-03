@@ -3,6 +3,8 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Unity.Mathematics;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using static TreeEditor.TreeEditorHelper;
 
@@ -15,7 +17,9 @@ public class GridManager : MonoBehaviour
     private float cellSize = 1;         // 그리드 사이즈
 
     private Node[,] grid;               // 전체 격자 노드 배열
-    public List<BuildData> bpData;        // 건물 데이터 리스트
+    public List<BuildData> bpData;      // 건물 데이터 리스트
+
+    private bool isLoged;
 
     void Awake()
     {
@@ -28,18 +32,20 @@ public class GridManager : MonoBehaviour
 
         CreateGrid();           // 그리드 생성
         NordExportToCSV();      // 그리드 csv 백업
-        BuildExportToCSV();     // 건물 데이터 csv 백업
     }
 
     void Start()    // 다른 메니저에서 건물 등의 정보 불러올 때 사용
     {
-
+        
     }
 
     void Update()
     {
-        NDResearch();       // 노드 walkable 값 탐색
-        NDInselt();         // 노드 수정
+        NDResearch();           // 노드 walkable 값 탐색
+        NDInselt();             // 노드 수정
+
+        isLoged = false;
+        BuildExportToCSV();     // 건물 데이터 csv 백업
     }
 
     public void NDResearch()
@@ -115,13 +121,20 @@ public class GridManager : MonoBehaviour
 
     public void BuildExportToCSV()       // 건물 데이터
     {
+        if (isLoged) return;
+
         StringBuilder sb = new StringBuilder();
-        sb.AppendLine("high,Center,EastUp,EastDown,WestUp,WestDown");
+        sb.AppendLine("Index,Name,High,Center,EUp,EDown,WUp,WDown");
 
         // bpData 출력 반복문
-
-
+        for (int i = 0; i < bpData.Count; i++)
+        {
+            sb.AppendLine($"{i},{bpData[i].height},{bpData[i].buildName},{bpData[i].corners[0].x},{bpData[i].corners[1].x}," +
+                $"{bpData[i].corners[2].x},{bpData[i].corners[3].x},{bpData[i].corners[4].x}");
+        }
         File.WriteAllText(Application.dataPath + "/03_Scripts/Pathfinding/BuildData.csv", sb.ToString());
+
+        isLoged = true;
     }
 
 

@@ -51,11 +51,13 @@ public class Node
 [System.Serializable]
 public class BuildData
 {
+    public string buildName;        // 건물 이름
     public float height;            // 건물의 높이
     public List<Vector3> corners;   // 중심점 포함 5개 좌표 (Center, EUp, EDown, WDown, WUp)
 
-    public BuildData(float h, List<Vector3> c)
+    public BuildData(string n, float h, List<Vector3> c)
     {
+        this.buildName = n;
         this.height = h;
         this.corners = c;
     }

@@ -46,7 +46,7 @@ public class BuildingSnaping : MonoBehaviour
         bp.Add(new Vector3(position.x - halfWidth, position.y, position.z - halfLength));
         bp.Add(new Vector3(position.x - halfWidth, position.y, position.z + halfLength));
 
-        BuildData data = new BuildData(high, bp);
+        BuildData data = new BuildData(this.name, high, bp);
         GridManager.instance.bpData.Add(data);
     }
 }
