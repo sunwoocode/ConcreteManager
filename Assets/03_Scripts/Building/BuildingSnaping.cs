@@ -47,7 +47,7 @@ public class BuildingSnaping : MonoBehaviour
 
 
         bp.Add(pos);
-        bp.Add(applyPosY);
+        bp.Add(applyPosX);
         bp.Add(applyPosY);
 
         BuildData data = new BuildData(this.name, high, bp);

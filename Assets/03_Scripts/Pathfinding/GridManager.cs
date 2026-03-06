@@ -1,3 +1,4 @@
+
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
@@ -7,7 +8,7 @@ using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using static TreeEditor.TreeEditorHelper;
+using UnityEngine.InputSystem.Utilities;
 
 public class GridManager : MonoBehaviour
 {
@@ -20,7 +21,11 @@ public class GridManager : MonoBehaviour
     private Node[,] grid;               // 전체 격자 노드 배열
     public List<BuildData> bpData;      // 건물 데이터 리스트
 
-    private bool isLoged;               // CSV 문서 초기화
+    private bool isNodeCleared;         // NodeData CSV 문서 초기화
+
+    public Node nodeData;               // 업데이트 되는 Node 데이터
+
+    public List<Node> nodes;            // 노드 반복문 횟수 체크
 
     void Awake()
     {
@@ -30,6 +35,7 @@ public class GridManager : MonoBehaviour
             Destroy(this);
 
         bpData = new List<BuildData>();
+        nodes = new List<Node>();
 
         CreateGrid();           // 그리드 생성
         NordExportToCSV();      // 그리드 csv 백업
@@ -37,6 +43,7 @@ public class GridManager : MonoBehaviour
 
     void Start()    // 다른 메니저에서 건물 등의 정보 불러올 때 사용
     {
+
     }
 
     void Update()
@@ -83,7 +90,9 @@ public class GridManager : MonoBehaviour
                             // wNode nodePos 계산 식
                             sb.AppendLine($"{node.nodePos.x},{node.nodePos.z},{node.nodeType},{node.walkable}");
 
-                            FindWalkableNode(node);
+                            nodes.Add(node);
+
+                            FindWalkableNode();
                         }
                     }
                 }
@@ -103,13 +112,14 @@ public class GridManager : MonoBehaviour
                             // hNode nodePos 계산 식
                             sb.AppendLine($"{node.nodePos.x},{node.nodePos.z},{node.nodeType},{node.walkable}");
 
-                            FindWalkableNode(node);
+                            nodes.Add(node);
+
+                            FindWalkableNode();
                         }
-                            
                     }
                 }
         }
-            
+
         File.WriteAllText(Application.dataPath + "/03_Scripts/Pathfinding/NodeData.csv", sb.ToString());
     }
 
@@ -130,30 +140,31 @@ public class GridManager : MonoBehaviour
         File.WriteAllText(Application.dataPath + "/03_Scripts/Pathfinding/BuildData.csv", sb.ToString());
     }
 
-
-    public void FindWalkableNode(Node node)      // 이동 가능 노드 탐색
+    public void FindWalkableNode()
     {
-        // node.nodePos이 bpData.corners[1]~bpData.corners[2] 범위 내 포함되는지 확인하고,
-        // 포함되어 있다면 해당 node.walkable = flase 한다.
+        if (nodes.Count == 0) return;
+
+        // 모든 노드 기본값 true로 초기화
+        for (int j = 0; j < nodes.Count; j++)
+            nodes[j].walkable = true;
 
         if (bpData == null || bpData.Count == 0) return;
 
         for (int i = 0; i < bpData.Count; i++)
         {
-            float minX = bpData[i].corners[1].x;
-            float maxX = bpData[i].corners[2].x;
-            float minZ = bpData[i].corners[1].z;
-            float maxZ = bpData[i].corners[2].z;
+            float minX = Mathf.Min(bpData[i].corners[1].x, bpData[i].corners[2].x);
+            float maxX = Mathf.Max(bpData[i].corners[1].x, bpData[i].corners[2].x);
+            float minZ = Mathf.Min(bpData[i].corners[1].z, bpData[i].corners[2].z);
+            float maxZ = Mathf.Max(bpData[i].corners[1].z, bpData[i].corners[2].z);
 
-            if (node.nodePos.x >= minX && node.nodePos.x <= maxX &&
-            node.nodePos.z >= minZ && node.nodePos.z <= maxZ)
+            for (int j = 0; j < nodes.Count; j++)
             {
-                node.walkable = false; // 건물 영역 안이므로 이동 불가
-                return; // 찾았으면 더 돌 필요 없음
+                if (nodes[j].nodePos.x >= minX && nodes[j].nodePos.x <= maxX &&
+                    nodes[j].nodePos.z >= minZ && nodes[j].nodePos.z <= maxZ)
+                {
+                    nodes[j].walkable = false;
+                }
             }
         }
-
-        // 겹치는 건물이 없으면 이동 가능 유지
-        node.walkable = true;
     }
 }
